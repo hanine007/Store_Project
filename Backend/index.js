@@ -2,20 +2,18 @@ import 'dotenv/config';
 import express from "express"
 import { PORT } from "./config.js"
 import mongoose from 'mongoose'
-import { Location } from './models/storemodel.js';
-
-
+import route from './routes/route.js' 
 
 const app =express()
 const MONGODB_URL = process.env.MONGODB_URL;
-
+app.use(express.json())
 app.get ('/',(req,res)=>{
    
     res.status(206).send ('Welcome to The Store')
 })
 
 
-
+app.use('/api',route)
 
 
 //BDD
