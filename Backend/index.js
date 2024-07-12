@@ -6,7 +6,9 @@ import route from './routes/route.js'
 import cors from 'cors'
 const app =express()
 const MONGODB_URL = process.env.MONGODB_URL;
+//middleware i analyse le corps des requêtes HTTP entrantes au format JSON et le transforme en objet JavaScript, accessible via req.body
 app.use(express.json())
+//allow la communication entre diff domaine
 app.use (cors())
 app.get ('/',(req,res)=>{
    
