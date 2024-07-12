@@ -129,15 +129,15 @@ route.get ('/summ',async(req,res)=>{
     try{
         const summ= await Location.aggregate([
             {
-                $project: {//extraire juste ls champs necessaire
+                $project: {//extraire juste ls champs necessaire de document de base
                     year: { $year: '$entry_date' },
-                  month: { $month: '$entry_date' },// cree champs mouth depuis entry date 
+                  month: { $month: '$entry_date' },// cree champs mouth depuis entry date en utulisant $mounth pour les avoir
                   price: 1 // Inclure le champ price pour l'agrégation suivante
                 }
               },
               {
                 $group: {// calculer selon les mois et les années
-                  _id: { year: "$year", month: "$month" },//clé de groupe
+                  _id: { year: "$year", month: "$month" },//clé de groupe par la quelle s'efectue les operations
                   total: { $sum: "$price" }
                 }
               },
