@@ -1,4 +1,4 @@
-import { Location } from './models/storemodel.js';
+import { Location } from '../models/storemodel.js';
 import express from 'express';
 import { Router } from 'express';
 const route = Router();
@@ -26,8 +26,9 @@ const newapp={
     exit_date:req.body.exit_date
 
 }
-
-
+const app = await Location.create(newapp)
+return res.status(200).send (app)
+     
     }
     catch(error){
         console.log(error.message)
@@ -37,3 +38,7 @@ const newapp={
     }
     
 })
+
+
+
+export default route;

@@ -13,7 +13,7 @@ const location = mongoose.Schema(
             
          },
          price :{
-            type:number,
+            type:Number,
             required:true
          },
          entry_date :{
