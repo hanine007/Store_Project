@@ -105,5 +105,22 @@ route.put('/app/:id',async(req,res)=>{
         })
     }
 })
-
+//Delete
+route.delete('/app/:id',async(req,res)=>{
+    try{
+        const supp= await Location.findByIdAndDelete(req.params.id) 
+        if(!supp){
+            return res.status(404).send({
+                message:'App not found'
+            })
+        }
+        res.status(200).send({ message: 'Book deleted successfully' })
+    }
+    catch(error){
+        console.log(error.message)
+        res.status(500).send({
+            message:error.message
+        })
+    }
+})
 export default route;
