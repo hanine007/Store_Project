@@ -123,4 +123,38 @@ route.delete('/app/:id',async(req,res)=>{
         })
     }
 })
+//get all price in this mount
+
+route.get ('/summ',async(req,res)=>{
+    try{
+        const summ= await Location.aggregate([
+            {
+                $project: {//extraire juste ls champs necessaire
+                    year: { $year: '$entry_date' },
+                  month: { $month: '$entry_date' },// cree champs mouth depuis entry date 
+                  price: 1 // Inclure le champ price pour l'agrégation suivante
+                }
+              },
+              {
+                $group: {// calculer selon les mois et les années
+                  _id: { year: "$year", month: "$month" },//clé de groupe
+                  total: { $sum: "$price" }
+                }
+              },
+              {
+                $sort: { "_id.year": 1, "_id.month": 1 }  // Optionnel : trier par mois
+              }
+            ]);
+        res.status(200).send(summ)
+        }
+
+    
+    catch(error){
+        console.log(error.message)
+        res.status(500).send({
+            message:error.message
+        })
+    }
+})
+
 export default route;
