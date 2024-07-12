@@ -3,10 +3,11 @@ import express from "express"
 import { PORT } from "./config.js"
 import mongoose from 'mongoose'
 import route from './routes/route.js' 
-
+import cors from 'cors'
 const app =express()
 const MONGODB_URL = process.env.MONGODB_URL;
 app.use(express.json())
+app.use (cors())
 app.get ('/',(req,res)=>{
    
     res.status(206).send ('Welcome to The Store')
