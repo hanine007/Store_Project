@@ -53,7 +53,7 @@ export const Home = () => {
                                 <td className="border slate-600 rounded-md text-center">{index + 1}</td>
                                 <td className="border slate-600 rounded-md">{app.name}</td>
                                 <td className="border px-4 py-2">{app.price}</td>
-                                <td className="border px-4 py-2">{app.entry_date}</td>
+                                <td className="border px-4 py-2 ">{app.entry_date}</td>
                                 <td className="border px-4 py-2">{app.exit_date}</td>
                                 <td className="border px-4 py-2">
                                     <div className="flex justify-center gap-x-4">
