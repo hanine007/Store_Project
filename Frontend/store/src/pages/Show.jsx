@@ -1,12 +1,13 @@
+// src/pages/Show.jsx
 
- const Show = () => {
-    // Votre logique pour afficher les détails d'un élément
+
+
+export const Show = () => {
+    // Contenu de votre composant Show
     return (
         <div>
-            <h2>Show Page</h2>
-            {/* Contenu de la page de détails */}
+            {/* Contenu de la page Show */}
         </div>
     );
 };
 
-export default Show
