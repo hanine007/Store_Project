@@ -1,7 +1,5 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
-//import { Link } from 'react-router-dom';
-//import { FaCalculator } from 'react-icons/fa'; // Import de l'icône de somme
 
 export const Summ = () => {
   const [data, setData] = useState([]);
