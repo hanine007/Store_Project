@@ -5,7 +5,7 @@ import {Home}from'./pages/Home'
 import {Edit} from './pages/Edit'
 import {Delete}from'./pages/Delete'
 import {Create} from'./pages/Creat'
-
+import { Summ } from "./pages/Somme";
 const app =()=>{
   return (
     
@@ -16,7 +16,7 @@ const app =()=>{
         <Route path="/details/:id" element={<Show />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/delete/:id" element={<Delete />} />
-
+        <Route path="/sum" element={<Summ />} />
       </Routes>
   )
 }

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import { BsInfoCircle } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { FaCalculator } from 'react-icons/fa'; // Import de l'icône de somme
 
 export const Home = () => {
     const [store, setStore] = useState([]); //store the information api
@@ -31,7 +32,10 @@ export const Home = () => {
                 <Link to="/Create" className="bg-blue-500 text-white p-2 rounded-md">
                     <MdOutlineAddBox className="text-blue-800 text-4xl" />
                 </Link>
-                
+                <Link to="/sum" className="bg-blue-500 text-white p-2 rounded-md flex items-center">
+        <FaCalculator className="text-white text-4xl mr-2" />
+        Somme
+      </Link>
             </div>
             {loading ? (
                 <Spinner />//true
