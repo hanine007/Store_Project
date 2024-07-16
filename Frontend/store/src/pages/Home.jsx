@@ -7,18 +7,18 @@ import { BsInfoCircle } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
 export const Home = () => {
-    const [store, setStore] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [store, setStore] = useState([]); //store the information api
+    const [loading, setLoading] = useState(false); // for know the state if ok or no
 
     useEffect(() => {
-        setLoading(true);
-        axios.get('http://localhost:3000/api/app')
+        setLoading(true);//is loading
+        axios.get('http://localhost:3000/api/app')//get all info
             .then((res) => {
-                setStore(res.data.data);
+                setStore(res.data.data);//update store with the info  store in data object  
                 setLoading(false);
             }).catch((err) => {
                 console.log(err);
-                setLoading(false);
+                setLoading(false);//Désactiver l'état de chargement en cas d'erreur
             });
     }, []);
 
@@ -34,11 +34,11 @@ export const Home = () => {
                 
             </div>
             {loading ? (
-                <Spinner />
-            ) : (
+                <Spinner />//true
+            ) : (//flase
                 <table className="w-full border-separate border-spacing-2">
                     <thead>
-                        <tr>
+                        <tr> 
                             <th className="border slate-600 rounded-md">No</th>
                             <th className="border slate-600 rounded-md">Name</th>
                             <th className="border px-4 py-2">Price</th>
