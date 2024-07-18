@@ -3,11 +3,15 @@ import { Spinner } from "../Components/spinner";
 import { Backto } from "../Components/Backto";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useSnackbar } from 'notistack';
+
 
 
 
 
 export const Delete = () => {
+    const { enqueueSnackbar } = useSnackbar(); // Utilisation de notistack pour les notifications
+
 const [loading,setLoading] = useState(false)
 const navigate = useNavigate();
 const {id}=useParams()
@@ -18,9 +22,13 @@ const handleDELETE=()=>{
     .then(()=>{
     navigate('/')
     setLoading(false);
+    enqueueSnackbar('Store Deleted  successfully', { variant: 'success' });
+
     })
     .catch((error)=>{
     setLoading(false)
+    enqueueSnackbar(`Error: ${error.message}`, { variant: 'error' });
+
     console.log(error)
     })
 }

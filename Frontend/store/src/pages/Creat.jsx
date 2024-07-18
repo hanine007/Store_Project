@@ -29,7 +29,7 @@ export const Create = () => {
    
     .then(() => {
       setLoading(false);
-      enqueueSnackbar('Data saved successfully', { variant: 'success' });
+      enqueueSnackbar('Store Created  successfully', { variant: 'success' });
       navigate('/');
     })
     .catch((error) => {
