@@ -29,8 +29,8 @@ const handleDELETE=()=>{
             <Backto/>
             <h1 className="text-3xl my-4">Delete Store</h1>
             {loading?<Spinner/>:('') }
-            <div className="flex flex-col items-center border-2">
-                <h3 className="" >Are you sur you want to delete it ?</h3>
+            <div className="flex flex-col items-center border-2 border-sky-400 rounded-xl">
+                <h3 className="" >Are you sure you want to delete it ?</h3>
                 <button onClick={handleDELETE} className="bg-red-500 text-white p-2 rounded-md">Delete</button>
              </div>
 

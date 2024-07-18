@@ -1,16 +1,16 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { Backto } from '../Components/Backto';
 export const Summ = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     axios.get('http://localhost:3000/api/summ')
       .then((response) => {
         setData(response.data);
         setLoading(false);
+       
       })
       .catch((error) => {
         setError(error.message);
@@ -27,7 +27,9 @@ export const Summ = () => {
   }
 
   return (
+    
     <div className="p-4">
+      <Backto />
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>
