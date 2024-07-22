@@ -22,3 +22,41 @@ rad.json
 TestResults.xml
 .env
 node_modules/
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Build Output
+/dist
+/build
+/.webpack
+/.cache
+
+# Electron Builder
+/dist/
+/build/
+.electron-vue/
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs_analysis.dat
+*.njsproj
+*.sln
+*.sw?
+
+# Miscellaneous
+.env
+.env.*
