@@ -39,7 +39,7 @@ app.on('window-all-closed', () => {
 });
 
 function startServers() {
-  const backendPath = path.resolve(__dirname, '../Backend'); // Remplacez 'path/to/backend' par le chemin réel vers votre backend
+  const backendPath = path.resolve(__dirname, 'Backend'); // Remplacez 'path/to/backend' par le chemin réel vers votre backend
   const frontendPath = path.resolve(__dirname, 'Frontend/store'); // Assurez-vous que 'Frontend/store' est correct
 
   const backendCommand = `npm run dev --prefix ${backendPath}`;
