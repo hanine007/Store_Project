@@ -1,0 +1,46 @@
+{
+  "name": "Bouchiba Mohammed ",
+  "version": "1.0.0",
+  "description": "Une application desktop construite avec Electron.",
+  "main": "main.js",
+    "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "postinstall": "cd Frontend/store && npm install && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "electron": "^26.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.monapp",
+    "files": [
+      "Backend/**/*",
+      "Frontend/store/dist/**/*",
+      "main.js",
+      "preload.js"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icons/icon.icns"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/icon.ico"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icons/icon.png"
+    }
+  },
+  "electron": {
+    "version": "26.0.0"
+  }
+}
