@@ -34,7 +34,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   // Ferme l'application si toutes les fenêtres sont fermées, sauf sur macOS
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit(); 
   }
 });
 
