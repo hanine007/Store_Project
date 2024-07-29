@@ -1,52 +1,46 @@
-const { app, BrowserWindow } = require('electron'); // Import des modules nécessaires d'Electron
-const path = require('path'); // Import du module 'path' pour manipuler les chemins de fichiers
-const { exec } = require('child_process'); // Import du module 'child_process' pour lancer des processus
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+const { exec } = require('child_process');
+const axios = require('axios');
 
-function createWindow () {
-  const mainWindow = new BrowserWindow({
-    width: 800, // Largeur de la fenêtre principale
-    height: 600, // Hauteur de la fenêtre principale
+let mainWindow;
+let backendProcess;
+let frontendProcess;
+
+// Fonction pour créer la fenêtre principale
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'), // Chemin vers le fichier preload.js
-      nodeIntegration: true, // Active l'intégration de Node.js dans le renderer
-      contextIsolation: false, // Désactive l'isolation de contexte pour simplifier le développement
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
     }
   });
 
   // Charge l'application frontend depuis le port spécifié
   mainWindow.loadURL('http://localhost:3001');
+  
+  // Ouvre les DevTools pour le débogage
+  mainWindow.webContents.openDevTools();
+
+  // Événement pour nettoyer la fenêtre
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 }
 
-app.whenReady().then(() => {
-  // Démarre les serveurs avant de créer la fenêtre principale
-  startServers();
-
-  createWindow();
-
-  // Crée une nouvelle fenêtre si l'utilisateur clique sur l'icône de l'application dans la barre de menu macOS
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
-
-app.on('window-all-closed', () => {
-  // Ferme l'application si toutes les fenêtres sont fermées, sauf sur macOS
-  if (process.platform !== 'darwin') {
-    app.quit(); 
-  }
-});
-
-function startServers() {
-  const backendPath = path.resolve(__dirname, 'Backend'); // Remplacez 'path/to/backend' par le chemin réel vers votre backend
-  const frontendPath = path.resolve(__dirname, 'Frontend/store'); // chemin vers'Frontend/store' est correct
+// Fonction pour démarrer les serveurs backend et frontend
+function startServers(callback) {
+  const backendPath = path.resolve(__dirname, 'Backend');
+  const frontendPath = path.resolve(__dirname, 'Frontend/store');
 
   const backendCommand = `npm run dev --prefix ${backendPath}`;
   const frontendCommand = `npm run dev --prefix ${frontendPath}`;
 
   // Démarrage du serveur backend
-  exec(backendCommand, (error, stdout, stderr) => {
+  backendProcess = exec(backendCommand, (error, stdout, stderr) => {
     if (error) {
       console.error(`Erreur lors du démarrage du backend: ${error}`);
       return;
@@ -56,7 +50,7 @@ function startServers() {
   });
 
   // Démarrage du serveur frontend
-  exec(frontendCommand, (error, stdout, stderr) => {
+  frontendProcess = exec(frontendCommand, (error, stdout, stderr) => {
     if (error) {
       console.error(`Erreur lors du démarrage du frontend: ${error}`);
       return;
@@ -64,4 +58,48 @@ function startServers() {
     console.log(`Frontend stdout: ${stdout}`);
     console.error(`Frontend stderr: ${stderr}`);
   });
+
+  // Vérifie si le frontend est prêt avant de créer la fenêtre
+  checkFrontendReady(() => {
+    // Callback après que le frontend est prêt
+    if (callback) callback();
+  });
 }
+
+// Fonction pour vérifier que le frontend est prêt
+function checkFrontendReady(callback) {
+  const url = 'http://localhost:3001';
+
+  axios.get(url)
+    .then(response => {
+      console.log('Frontend is ready!');
+      if (callback) callback();
+    })
+    .catch(error => {
+      console.error(`Erreur de connexion au frontend: ${error}`);
+      setTimeout(() => checkFrontendReady(callback), 1000); // Réessayer après 1 seconde
+    });
+}
+
+// Événements pour gérer la vie de l'application
+app.whenReady().then(() => {
+  // Démarre les serveurs avant de créer la fenêtre principale
+  startServers(() => {
+    createWindow();
+  });
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    // Ferme les processus en cours avant de quitter l'application
+    if (backendProcess) backendProcess.kill();
+    if (frontendProcess) frontendProcess.kill();
+    app.quit();
+  }
+});
