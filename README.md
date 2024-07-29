@@ -9,14 +9,11 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Development Mode](#development-mode)
   - [Local](#local)
-  - [Testing](#testing)
-  - [Production](#production)
-- [API Endpoints](#api-endpoints)
-- [Authentication](#authentication)
+  
+
 - [Database](#database)
-- [Test](#Test)
+- 
 - [Logging](#logging)
 - [License](#license)
 
