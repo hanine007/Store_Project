@@ -25,7 +25,7 @@ mongoose.connect(MONGODB_URL).then(()=>{
 
 })
 .catch((error)=>{
-    console.log('Error: elle arrive pas a ce connecter',error)
+    console.log('Error: elle arrive pas a ce connecteer',error)
 
 })
 
