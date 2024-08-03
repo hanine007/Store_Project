@@ -52,14 +52,16 @@ services:
     # specify the ports to expose for the api service
     # the first number is the port on the host machine
     # the second number is the port inside the container
+    env_file:
+      -  ./Backend/.env
     ports: 
       - 3000:3000
 
     # specify environment variables for the api service
     environment: 
-      MONGODB_URL: mongodb://db:27017/Store
+      MONGODB_URL: ${MONGODB_URRL}
 
-    
+    #the db specifie the services
     # establish docker compose watch mode for the api service
     develop:
       # specify the files to watch for changes
