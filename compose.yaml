@@ -53,7 +53,7 @@ services:
     # the first number is the port on the host machine
     # the second number is the port inside the container
     env_file:
-      -  ./Backend/.env
+      -  ./.env
     ports: 
       - 3000:3000
 
