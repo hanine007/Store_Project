@@ -24,7 +24,7 @@ const location = mongoose.Schema(
          exit_date :{
             type:Date,
             required:true
-         }
+         },
 
     },
     {
