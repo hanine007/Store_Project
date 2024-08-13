@@ -1,6 +1,7 @@
 import { Location } from '../models/storemodel.js';
 import express from 'express';
 import { Router } from 'express';
+import { differenceInMonths, addMonths } from 'date-fns';
 const route = Router();
 //post 
 route.post ('/app',async (req,res)=>{
@@ -125,6 +126,7 @@ route.delete('/app/:id',async(req,res)=>{
 })
 //get all price in this mount
 
+/*
 route.get ('/summ',async(req,res)=>{
     try{
         const summ= await Location.aggregate([
@@ -149,6 +151,10 @@ route.get ('/summ',async(req,res)=>{
         }
 
     
+
+
+      
+
     catch(error){
         console.log(error.message)
         res.status(500).send({
@@ -156,5 +162,80 @@ route.get ('/summ',async(req,res)=>{
         })
     }
 })
+*/
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+route.get('/summ', async (req, res) => {
+    try {
+      const summ = await Location.aggregate([
+        {
+          $addFields: {
+            // Calculer le nombre de mois entre entry_date et exit_date
+            months: {
+              $subtract: [
+                { $add: [ { $multiply: [ { $year: "$exit_date" }, 12 ] }, { $month: "$exit_date" } ] },
+                { $add: [ { $multiply: [ { $year: "$entry_date" }, 12 ] }, { $month: "$entry_date" } ] }
+              ]
+            }
+          }
+        },
+        {
+          $project: {
+            year: { $year: '$entry_date' },
+            month: { $month: '$entry_date' },
+            price: 1,
+            months: 1
+          }
+        },
+        {
+          $group: {
+            _id: { year: "$year", month: "$month" },
+            totalPrice: { $sum: "$price" },
+            totalMonths: { $sum: "$months" } // Somme des mois pour chaque groupe
+          }
+        },
+        {
+          $addFields: {
+            // Calculer le montant total en multipliant le nombre de mois par le prix total
+            totalAmount: { $multiply: ["$totalPrice", "$totalMonths"] }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 } // Optionnel : trier par année et mois
+        }
+      ]);
+      res.status(200).send(summ);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+  
+
+
+
+
+
+
+
+
+
+
 
 export default route;

@@ -1,16 +1,17 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Backto } from '../Components/Backto';
+
 export const Summ = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     axios.get('http://localhost:3000/api/summ')
       .then((response) => {
         setData(response.data);
         setLoading(false);
-       
       })
       .catch((error) => {
         setError(error.message);
@@ -27,7 +28,6 @@ export const Summ = () => {
   }
 
   return (
-    
     <div className="p-4">
       <Backto />
       <table className="min-w-full bg-white border border-gray-300">
@@ -35,7 +35,7 @@ export const Summ = () => {
           <tr>
             <th className="py-2 px-4 border-b">Year</th>
             <th className="py-2 px-4 border-b">Month</th>
-            <th className="py-2 px-4 border-b">Total Price</th>
+            <th className="py-2 px-4 border-b">Total Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@ export const Summ = () => {
             <tr key={index} className="hover:bg-gray-100">
               <td className="py-2 px-4 border-b">{item._id.year}</td>
               <td className="py-2 px-4 border-b">{item._id.month}</td>
-              <td className="py-2 px-4 border-b">{item.total}</td>
+              <td className="py-2 px-4 border-b">{item.totalAmount}</td>
             </tr>
           ))}
         </tbody>
@@ -51,5 +51,3 @@ export const Summ = () => {
     </div>
   );
 };
-
-
