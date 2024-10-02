@@ -1,3 +1,13 @@
+
+
+![Node.js](https://img.shields.io/badge/Node.js-18.0-green)
+![Express.js](https://img.shields.io/badge/Express.js-Framework-blue)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-brightgreen)
+![CORS](https://img.shields.io/badge/CORS-Security-yellow)
+![Morgan](https://img.shields.io/badge/Morgan-Logging-orange)
+![React](https://img.shields.io/badge/React-Frontend-blue)
+
+
 # Store_Project 
 
 
